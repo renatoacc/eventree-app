@@ -23,7 +23,9 @@
     </label>
 
     <label> Avatar
-        <input type="file" name="avatar" placeholder="Favorite Artists" />
+        {{#each avatar}}
+        <img src="{{this.src}}" alt="{{this.name}}">
+        {{/each}}
     </label>
 
     <button type="submit">SIGN UP</button>

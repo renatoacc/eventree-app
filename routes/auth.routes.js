@@ -4,14 +4,16 @@ const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 
 const User = require("../models/User.model");
-const country = require("../models/Country.code.js");
+const country = require("../models/Country.code");
+const avatar = require("../models/Avatar");
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", isLoggedOut, (req, res, next) => {
   console.log(country);
-  res.render("auth/signup", country);
+  // res.render("auth/signup", country, avatar); //erro ask Rico or Vinayak
+  res.render("auth/signup");
 });
 
 router.post("/signup", isLoggedOut, (req, res, next) => {
