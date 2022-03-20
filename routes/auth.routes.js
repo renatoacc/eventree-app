@@ -59,15 +59,6 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
         res.redirect("/");
       })
       .catch((error) => {
-        //   if (error instanceof mongoose.Error.ValidationError) {
-        //     res.status(500).render("auth/signup", { errorMessage: error.message });
-        //   } else if (error.code === 11000) {
-        //     res.status(500).render("auth/signup", {
-        //       errorMessage: "Username is already being used.",
-        //     });
-        //   } else {
-        //     next(error);
-        //   }
         next(error);
       });
   });
@@ -95,15 +86,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         });
         return;
       } else if (bcryptjs.compareSync(password, user.password)) {
+        req.session.user = user._id;
         res.render("profile/profile", { user });
       } else {
         res.render("auth/login", {
           errorMessage: "Incorrect password. Try again.",
         });
       }
-      // req.session.user = user;
-      req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-      return res.redirect("/profile");
     })
     .catch((error) => next(error));
 });
