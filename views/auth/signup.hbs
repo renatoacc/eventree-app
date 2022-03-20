@@ -1,1 +1,33 @@
-<h2>Signup</h2>
+<div id="form">
+  <h2>SIGN UP</h2>
+  <form action="/signup" method="POST">
+ 
+    <label> Username
+        <input type="text" name="username" placeholder="Username" />
+    </label>
+
+    <label> Password
+      <input type="password" name="password" placeholder="********" />
+    </label>
+
+    <label> Favorite Artists
+        <input type="text" name="favoriteartists" placeholder="Favorite Artists" />
+    </label>
+
+    <label> Location
+      <input type="text" name="city" placeholder="City"/>
+      <input type="text" name="country" placeholder="Country"/>
+    </label>
+
+    <label> Avatar
+        <input type="file" name="avatar" placeholder="Favorite Artists" />
+    </label>
+
+    <button type="submit">SIGN UP</button>
+ 
+    {{#if errorMessage}}
+      <p class="error">{{errorMessage}}</p>
+    {{/if}}
+    
+  </form>
+</div>
