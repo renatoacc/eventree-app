@@ -11,12 +11,15 @@
     </label>
 
     <label> Favorite Artists
-        <input type="text" name="favoriteartists" placeholder="Favorite Artists" />
+        <input type="text" name="favoriteArtist" placeholder="Favorite Artists" />
     </label>
 
-    <label> Location
-      <input type="text" name="city" placeholder="City"/>
-      <input type="text" name="country" placeholder="Country"/>
+    <label> Country
+      <select name="country">
+        {{#each country}}
+          <option value="{{this.value}}">{{this.name}}</option>
+        {{/each}}
+      </select>
     </label>
 
     <label> Avatar

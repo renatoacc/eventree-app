@@ -11,19 +11,21 @@ const userSchema = new Schema({
     require: [true, "Password is required."],
   },
   favoriteArtist: String,
-  location:{
-    city : String,
-    country : String,
+  country: {
+    type: String,
+    default: "US",
   },
   avatar: {
-    type: String, 
-    default: 'images/avatar/1.jpg'
-  }, 
-  list: [{
-    type: Schema.Types.ObjectId, 
-    ref: "List",
-    default: []
-  },],      
+    type: String,
+    default: "images/avatar/1.jpg",
+  },
+  list: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "List",
+      default: [],
+    },
+  ],
 });
 
 const User = model("User", userSchema);
