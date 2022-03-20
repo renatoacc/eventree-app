@@ -43,13 +43,16 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
       .genSalt(saltRounds)
       .then((salt) => bcryptjs.hash(password, salt))
       .then((hashedPassword) => {
-        //console.log(`Password hash: ${hashedPassword}`);
         return User.create({
           username: username,
           password: hashedPassword,
           favoriteArtist: favoriteArtist,
           country: country,
         });
+      })
+      .then((user) => {
+        req.session.user = user;
+        res.redirect("/");
       })
       .then((userFromDB) => {
         console.log("Newly created user is: ", userFromDB);
@@ -98,6 +101,9 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           errorMessage: "Incorrect password. Try again.",
         });
       }
+      // req.session.user = user;
+      req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
+      return res.redirect("/profile");
     })
     .catch((error) => next(error));
 });
@@ -113,7 +119,7 @@ router.get("/logout", isLoggedIn, (req, res) => {
   });
 });
 
-router.get("/profile", (req, res, next) => {
+router.get("/profile", isLoggedIn, (req, res, next) => {
   res.render("profile/profile");
 });
 module.exports = router;
