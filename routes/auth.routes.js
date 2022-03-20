@@ -5,12 +5,12 @@ const saltRounds = 10;
 
 const User = require("../models/User.model");
 const country = require("../models/Country.code.js");
-console.log(country);
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", isLoggedOut, (req, res, next) => {
+  console.log(country);
   res.render("auth/signup", country);
 });
 
@@ -100,15 +100,16 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 router.get("/logout", isLoggedIn, (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res
-        .status(500)
-        .render("auth/logout", { errorMessage: err.message });
+      return res.status(500).render("/", { errorMessage: err.message });
     }
     res.redirect("/");
   });
 });
-
-router.get("/profile", isLoggedIn, (req, res, next) => {
-  res.render("profile/profile");
+router.get("/logout", isLoggedOut, (req, res) => {
+  res.redirect("/login", { errorMessage: "Please make the login" });
 });
+
+// router.get("/profile", isLoggedIn, (req, res, next) => {
+//   res.render("profile/profile");
+// });
 module.exports = router;
