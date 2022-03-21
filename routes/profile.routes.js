@@ -30,9 +30,8 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
     const searchWord = req.body.search;
     const data = await search({ keyword: searchWord });
     const cleanData = data.map((elem) => {
-      return { ...elem, srcImage: elem.images[4].url };
+      return { ...elem, srcImage: elem.images[3].url };
     });
-    console.log(cleanData);
     res.render("events/search", { cleanData });
   } catch (err) {
     res.render("events/search", {
@@ -42,8 +41,20 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/detailevents", isLoggedIn, (req, res, next) => {
-  res.render("events/detailevents");
+router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    const searchID = req.params.id;
+    console.log(searchID);
+    const data = await search({ id: searchID });
+    const cleanData = data.map((elem) => {
+      return { ...elem, srcImage: elem.images[3].url };
+    });
+    res.render("events/detailevents", { cleanData });
+  } catch (err) {
+    res.render("events/search", {
+      errorMessage: "Error",
+    });
+  }
 });
 
 module.exports = router;

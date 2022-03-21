@@ -6,8 +6,6 @@
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
-
-<br><br><br><br><br><br><br>
 <div class="row row-cols-1 row-cols-md-2 g-4">
 {{#each cleanData}}
   <div class="col">
@@ -23,10 +21,10 @@
         {{#with this.dates}}
         <p class="card-text"><small class="text-muted">Data: {{start.localDate}}</small></p>
         {{/with}}
-        <a href={{this.url}}  class="card-text" target="_blank" >Buy your Ticket's here</a>
+        <a href={{this.url}}  class="btn btn-warning" target="_blank" >Buy your Ticket's here</a>
         <br>
         <a href="/detailevents/{{this.id}}" class="btn btn-ligth">More Details</a>
-        <a href="/profile/{{this.id}}" class="btn btn-ligth">Add to your list</a>
+        <a href="/profile/{{this.id}}" class="btn btn-dark">Add to your list</a>
       </div>
 </div>
 </div>

@@ -3,15 +3,15 @@
  
   <form action="/login" method="POST">
  
-    <label> Username
-      <input type="text" name="username"/>
+    <label class="form-label"> Username
+      <input class="form-control" type="text" name="username"/>
     </label>
  
-    <label>Password
-      <input type="password" name="password" placeholder="********" />
+    <label class="form-label">Password
+      <input class="form-control" type="password" name="password" placeholder="********" />
     </label>
  
-    <button type="submit">Login</button>
+    <button class="btn btn-light" type="submit">Login</button>
  
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
