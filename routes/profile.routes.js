@@ -9,12 +9,11 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const async = require("hbs/lib/async");
 
 async function search(filters) {
-  //   const url = `https://app.ticketmaster.com/discovery/v2/events.json?&${key}=${word}&apikey=Tzj137hkhXHP4pMeBYhc6BO9P99inCPi`;
-  const { data: resposta } = await axios.get(
+  const { data: answer } = await axios.get(
     "https://app.ticketmaster.com/discovery/v2/events.json",
     { params: { apikey: "Tzj137hkhXHP4pMeBYhc6BO9P99inCPi", ...filters } }
   );
-  const data = resposta._embedded.events;
+  const data = answer._embedded.events;
   return data;
 }
 
@@ -27,13 +26,24 @@ router.get("/search", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/search", isLoggedIn, async (req, res, next) => {
-  const searchWord = req.body.search;
-  const data = await search({ keyword: searchWord });
-  const cleanData = data.map((elem) => {
-    return { ...elem, srcImage: elem.images[0].url };
-  });
-  console.log(cleanData);
-  res.render("events/search", { cleanData });
+  try {
+    const searchWord = req.body.search;
+    const data = await search({ keyword: searchWord });
+    const cleanData = data.map((elem) => {
+      return { ...elem, srcImage: elem.images[4].url };
+    });
+    console.log(cleanData);
+    res.render("events/search", { cleanData });
+  } catch (err) {
+    res.render("events/search", {
+      errorMessage:
+        "Your event/team/band/concert don't give any information to show, please try again.",
+    });
+  }
+});
+
+router.get("/detailevents", isLoggedIn, (req, res, next) => {
+  res.render("events/detailevents");
 });
 
 module.exports = router;
