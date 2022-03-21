@@ -2,9 +2,12 @@
 
 {{#if user}}
   <h2>Welcome, {{ user.username }}!</h2>
-  <button>
-    <a href="/profile">Reload the page</a>
-  </button>
+  <h3>Country</h3>
+  <h5>Favorite artist: {{user.favoriteArtist}}</h5>
+  <img src="{{user.avatar}}">
+  {{#each user.list}}
+  <p>{{this.name}}</p>
+  {{/each}}
 {{else}}
   <p>Still no logged in user, sorry!</p>
 {{/if}}

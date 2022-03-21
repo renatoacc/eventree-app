@@ -12,8 +12,9 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", isLoggedOut, (req, res, next) => {
   console.log(country);
-  // res.render("auth/signup", country, avatar); //erro ask Rico or Vinayak
-  res.render("auth/signup");
+  console.log(avatar);
+  res.render("auth/signup", { avatar, country });
+  // res.render("auth/signup");
 });
 
 router.post("/signup", isLoggedOut, (req, res, next) => {
@@ -38,7 +39,7 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
     if (found) {
       return res
         .status(400)
-        .render("auth.signup", { errorMessage: "Username already taken." });
+        .render("auth/signup", { errorMessage: "Username already taken." });
     }
 
     bcryptjs
@@ -87,14 +88,16 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           errorMessage: "Username is not registered. Try again.",
         });
         return;
-      } else if (bcryptjs.compareSync(password, user.password)) {
-        req.session.user = user._id;
-        res.render("profile/profile", { user });
-      } else {
-        res.render("auth/login", {
-          errorMessage: "Incorrect password. Try again.",
-        });
       }
+
+      if (bcryptjs.compareSync(password, user.password)) {
+        req.session.user = user;
+        console.log(user);
+        res.redirect("/profile");
+      }
+      res.render("auth/login", {
+        errorMessage: "Incorrect password. Try again.",
+      });
     })
     .catch((error) => next(error));
 });
@@ -111,7 +114,8 @@ router.get("/logout", isLoggedOut, (req, res) => {
   res.redirect("/login", { errorMessage: "Please make the login" });
 });
 
-// router.get("/profile", isLoggedIn, (req, res, next) => {
-//   res.render("profile/profile");
-// });
+router.get("/profile", isLoggedIn, (req, res, next) => {
+  res.render("profile/profile", { user: req.session.user });
+});
+
 module.exports = router;
