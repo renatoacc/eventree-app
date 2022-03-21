@@ -24,10 +24,10 @@
 
     <label> Avatar
         {{#each avatar}}
-        <img src="{{this.src}}" alt="{{this.name}}">
+        <img class="avatar" id="{{this.src}}" src="{{this.src}}" alt="{{this.name}}">
         {{/each}}
     </label>
-
+    <input id="avatarInput" type="hidden" value="av1" name="avatar">
     <button type="submit">SIGN UP</button>
  
     {{#if errorMessage}}
@@ -36,3 +36,12 @@
     
   </form>
 </div>
+<script>
+  const allAvatar = [...document.querySelectorAll(".avatar")];
+  allAvatar.forEach((elem, index) => {
+    const avatarSrc = elem.id;
+    elem.addEventListener("click", () => {
+      document.getElementById("avatarInput").value = avatarSrc;
+    })
+  })
+</script>

@@ -19,7 +19,7 @@ router.get("/signup", isLoggedOut, (req, res, next) => {
 
 router.post("/signup", isLoggedOut, (req, res, next) => {
   //console.log('The form data: ', req.body);
-  const { username, password, favoriteArtist, country } = req.body;
+  const { username, password, favoriteArtist, country, avatar } = req.body;
 
   if (!username || !password) {
     res.render("auth/signup", {
@@ -47,10 +47,11 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
       .then((salt) => bcryptjs.hash(password, salt))
       .then((hashedPassword) => {
         return User.create({
-          username: username,
+          username,
           password: hashedPassword,
-          favoriteArtist: favoriteArtist,
-          country: country,
+          favoriteArtist,
+          country,
+          avatar,
         });
       })
       .then((user) => {
