@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const listSchema = new Schema({
   eventId: String,
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: String,
 });
 
 const List = model("List", listSchema);
