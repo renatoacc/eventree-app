@@ -79,3 +79,29 @@ router.get("/eventadded/:id", async (req, res, next) => {
 });
 
 module.exports = router;
+
+/*
+router.get("/eventadded/:id", (req, res, next) => {
+  const idEvent = req.params.id;
+  const currentUserId = req.session.user._id;
+  
+
+  List.create({ eventId: idEvent, userId: currentUserId })
+
+    .then((dbList) => {
+      const create = User.findByIdAndUpdate(currentUserId, {
+        $push: { list: dbList._id },
+      });
+      return create;
+    })
+    .catch((err) => {
+      console.log(`Err while adding the event in the DB: ${err}`);
+      next(err);
+    });
+  List.find()
+    .populate("userId")
+    .then((dblist) => {
+      console.log("Posts from the DB: ", dblist);
+    })
+    .then(() => res.redirect("/profile"));
+});*/
