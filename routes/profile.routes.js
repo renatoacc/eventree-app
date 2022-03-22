@@ -17,8 +17,18 @@ async function search(filters) {
   return data;
 }
 
-router.get("/profile", isLoggedIn, (req, res, next) => {
-  res.render("profile/profile", { user: req.session.user });
+router.get("/profile", isLoggedIn, async (req, res, next) => {
+  const loggedInUser = req.session.user._id;
+  let currentUser = await User.findOne({
+    _id: loggedInUser,
+  });
+  await currentUser.populate("list");
+  const listEventId = await currentUser.list.map((element) =>{
+  const data = search({ id: element.eventId });
+  return data
+  })
+  console.log(listEventId)
+  res.render("profile/profile", { user: req.session.user, listEventId });
 });
 
 router.get("/search", isLoggedIn, (req, res, next) => {
