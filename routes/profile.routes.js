@@ -7,7 +7,6 @@ const avatar = require("../models/Avatar");
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
-const async = require("hbs/lib/async");
 
 async function search(filters) {
   const { data: answer } = await axios.get(
@@ -45,7 +44,6 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
 router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   try {
     const searchID = req.params.id;
-    //console.log(searchID);
     const data = await search({ id: searchID });
     const cleanData = data.map((elem) => {
       return { ...elem, srcImage: elem.images[3].url };
@@ -61,10 +59,16 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
 router.get("/eventadded/:id", async (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
-
+  const data = await search({ id: idEvent });
+  const eventDetail = data.map((elem) => {
+    return { ...elem, srcImage: elem.images[3].url };
+  });
+  console.log(eventDetail);
   const newList = {
-    eventId: idEvent,
-    userId: currentUserId,
+    eventId: eventDetail[0]._id,
+    name: eventDetail[0].name,
+    img: eventDetail[0].srcImage,
+    date: eventDetail[0].dates.start.localDate,
   };
 
   let newListDB = await List.create(newList);
@@ -75,51 +79,3 @@ router.get("/eventadded/:id", async (req, res, next) => {
 });
 
 module.exports = router;
-
-/*
-// router.get("/eventadded/:id", (req, res, next) => {
-//   const idEvent = req.params.id;
-//   const currentUserId = req.session.user._id;
-//   console.log("Hello hahahahahahah", idEvent, currentUserId);
-
-//   List.create({ idEvent, currentUserId })
-
-//     .then((dbList) => {
-//       const create = User.findByIdAndUpdate(currentUserId, {
-//         $push: { list: dbList._id },
-//       });
-//       return create;
-//     })
-//     .then(() => res.redirect("/profile"))
-//     .catch((err) => {
-//       console.log(`Err while adding the event in the DB: ${err}`);
-//       next(err);
-//     });
-//   // List.find()
-//   //   .populate("userId")
-//   //   .then((dblist) => {
-//   //     console.log("Posts from the DB: ", dblist);
-//   //   })
-//   //   .then(() => res.redirect("/profile"));
-// });
-
-
-
-
-
-router.post("/create-room", async (req, res, next) => {
-  const { roomName, roomSize } = req.body;
-  const currentUserId = req.session.user._id;
-  const currentUserName = req.session.userInfo.username;
-  const newRoom = {
-    room_name: roomName,
-    room_size: roomSize,
-    room_user: currentUserId,
-  };
-  let roomFromDB = await RoomModel.create(newRoom);
-  await UserModel.updateOne(
-    { username: currentUserName },
-    { $push: { rooms: [roomFromDB] } }
-  );
-  res.redirect("/profile");
-});*/
