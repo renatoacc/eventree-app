@@ -1,9 +1,9 @@
 const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose");
 
 const listSchema = new Schema({
- name: String,
- location: String,
- date: Date,
+  eventId: String,
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
 const List = model("List", listSchema);

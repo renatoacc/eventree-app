@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const axios = require("axios");
 const User = require("../models/User.model");
+const List = require("../models/List.model");
 const country = require("../models/Country.code");
 const avatar = require("../models/Avatar");
 
@@ -44,7 +45,7 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
 router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   try {
     const searchID = req.params.id;
-    console.log(searchID);
+    //console.log(searchID);
     const data = await search({ id: searchID });
     const cleanData = data.map((elem) => {
       return { ...elem, srcImage: elem.images[3].url };
@@ -56,5 +57,51 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
     });
   }
 });
+
+router.get("/eventadded/:id", (req, res, next) => {
+  const idEvent = req.params.id;
+  const currentUserId = req.session.user._id;
+  console.log("Hello hahahahahahah", idEvent, currentUserId);
+
+  List.create({ idEvent, currentUserId })
+
+    .then((dbList) => {
+      const create = User.findByIdAndUpdate(currentUserId, {
+        $push: { list: dbList._id },
+      });
+      return create;
+
+      //console.log(create)
+    })
+    //.then(() => res.redirect('/profile'))
+    .catch((err) => {
+      console.log(`Err while adding the event in the DB: ${err}`);
+      next(err);
+    });
+  List.find()
+    .populate("userId")
+    .then((dblist) => {
+      console.log("Posts from the DB: ", dblist);
+    }) 
+    .then(() => res.redirect("/profile"));
+});
+
+/*
+router.post("/create-room", async (req, res, next) => {
+  const { roomName, roomSize } = req.body;
+  const currentUserId = req.session.user._id;
+  const currentUserName = req.session.userInfo.username;
+  const newRoom = {
+    room_name: roomName,
+    room_size: roomSize,
+    room_user: currentUserId,
+  };
+  let roomFromDB = await RoomModel.create(newRoom);
+  await UserModel.updateOne(
+    { username: currentUserName },
+    { $push: { rooms: [roomFromDB] } }
+  );
+  res.redirect("/profile");
+});*/
 
 module.exports = router;

@@ -15,11 +15,12 @@
     <h5>Date: {{this.dates.start.localDate}} - Time: {{this.dates.start.localTime}}</h5>
     <h5><a href={{this.url}} class="btn btn-warning" target="_blank">Buy NOW</a></h5>
     <h5><a href="/profile/{{this.id}}" class="btn btn-dark">Add to your list</a></h5>
+    
 {{#with this._embedded.attractions.0.externalLinks}}
     {{#if this.youtube.0.url}}<h5><a href={{this.youtube.0.url}} target="_blank">Youtube</a></h5>{{/if}}
     {{#if this.twitter.0.url}}<h5><a href={{this.twitter.0.url}} target="_blank">Twitter</a></h5>{{/if}}
     {{#if this.spotify.0.url}}<h5><a href={{this.spotify.0.url}} target="_blank">Spotify</a></h5>{{/if}}
     {{#if this.instagram.0.url}}<h5><a href={{this.instagram.0.url}} target="_blank">Instagram</a></h5>{{/if}}
-    {{#if this.homepage.0.url}}<h5><a href={{this.homepage.0.url}} target="_blank">homepage</a></h5>{{/if}}
+    {{#if this.homepage.0.url}}<h5><a href={{this.homepage.0.url}} target="_blank">Homepage</a></h5>{{/if}}
 {{/with}}
 {{/each}}
