@@ -4,7 +4,7 @@
   <h2>Welcome, {{ user.username }}!</h2>
   <h3>Country: {{user.country}}</h3> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
   <h5>Favorite artist: {{user.favoriteArtist}}</h5>
-  <img src="{{user.avatar}}">
+  <img style="height: 80px;" src="{{user.avatar}}">
   {{#each user.list}}
   <p>{{this.name}}</p>
   {{/each}}

@@ -58,35 +58,55 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/eventadded/:id", (req, res, next) => {
+router.get("/eventadded/:id", async (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
-  console.log("Hello hahahahahahah", idEvent, currentUserId);
 
-  List.create({ idEvent, currentUserId })
+  const newList = {
+    eventId: idEvent,
+    userId: currentUserId,
+  };
 
-    .then((dbList) => {
-      const create = User.findByIdAndUpdate(currentUserId, {
-        $push: { list: dbList._id },
-      });
-      return create;
-
-      //console.log(create)
-    })
-    //.then(() => res.redirect('/profile'))
-    .catch((err) => {
-      console.log(`Err while adding the event in the DB: ${err}`);
-      next(err);
-    });
-  List.find()
-    .populate("userId")
-    .then((dblist) => {
-      console.log("Posts from the DB: ", dblist);
-    }) 
-    .then(() => res.redirect("/profile"));
+  let newListDB = await List.create(newList);
+  await User.findByIdAndUpdate(currentUserId, {
+    $push: { list: [newListDB] },
+  });
+  res.redirect("/profile");
 });
 
+module.exports = router;
+
 /*
+// router.get("/eventadded/:id", (req, res, next) => {
+//   const idEvent = req.params.id;
+//   const currentUserId = req.session.user._id;
+//   console.log("Hello hahahahahahah", idEvent, currentUserId);
+
+//   List.create({ idEvent, currentUserId })
+
+//     .then((dbList) => {
+//       const create = User.findByIdAndUpdate(currentUserId, {
+//         $push: { list: dbList._id },
+//       });
+//       return create;
+//     })
+//     .then(() => res.redirect("/profile"))
+//     .catch((err) => {
+//       console.log(`Err while adding the event in the DB: ${err}`);
+//       next(err);
+//     });
+//   // List.find()
+//   //   .populate("userId")
+//   //   .then((dblist) => {
+//   //     console.log("Posts from the DB: ", dblist);
+//   //   })
+//   //   .then(() => res.redirect("/profile"));
+// });
+
+
+
+
+
 router.post("/create-room", async (req, res, next) => {
   const { roomName, roomSize } = req.body;
   const currentUserId = req.session.user._id;
@@ -103,5 +123,3 @@ router.post("/create-room", async (req, res, next) => {
   );
   res.redirect("/profile");
 });*/
-
-module.exports = router;
