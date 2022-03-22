@@ -25,6 +25,7 @@
 
     <label class="form-label"> Avatar
         {{#each avatar}}
+        {{!-- Alterar o estilo das imagens no CSS --}}
         <img style="height: 80px;" class="avatar" id="{{this.src}}" src="{{this.src}}" alt="{{this.name}}">
         {{/each}}
     </label>

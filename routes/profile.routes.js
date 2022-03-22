@@ -23,12 +23,7 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
     _id: loggedInUser,
   });
   await currentUser.populate("list");
-  const listEventId = await currentUser.list.map((element) =>{
-  const data = search({ id: element.eventId });
-  return data
-  })
-  console.log(listEventId)
-  res.render("profile/profile", { user: req.session.user, listEventId });
+  res.render("profile/profile", { currentUser });
 });
 
 router.get("/search", isLoggedIn, (req, res, next) => {
@@ -75,7 +70,7 @@ router.get("/eventadded/:id", async (req, res, next) => {
   });
   console.log(eventDetail);
   const newList = {
-    eventId: eventDetail[0]._id,
+    eventId: idEvent,
     name: eventDetail[0].name,
     img: eventDetail[0].srcImage,
     date: eventDetail[0].dates.start.localDate,
@@ -86,6 +81,24 @@ router.get("/eventadded/:id", async (req, res, next) => {
     $push: { list: [newListDB] },
   });
   res.redirect("/profile");
+});
+
+router.get("/profile/:id/delete", async (req, res) => {
+  try {
+    const idEvent = req.params.id;
+    const eventList = await User.find({ list: idEvent });
+    eventList.forEach(async (event) => {
+      const eventIndex = event.list.indexOf(idEvent);
+      event.list.splice(eventIndex, 1);
+      await event.save();
+    });
+
+    await List.findByIdAndRemove(idEvent);
+
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 module.exports = router;

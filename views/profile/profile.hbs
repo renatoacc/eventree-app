@@ -1,12 +1,20 @@
-<h2>Profile</h2>
-
-{{#if user}}
-  <h2>Welcome, {{ user.username }}!</h2>
-  <h3>Country: {{user.country}}</h3> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
-  <h5>Favorite artist: {{user.favoriteArtist}}</h5>
-  <img style="height: 80px;" src="{{user.avatar}}">
-  {{#each user.list}}
-  <p>{{this.name}}</p>
+{{#if currentUser}}
+  <h2>Welcome, {{ currentUser.username }}!</h2>
+  <h3>Country: {{currentUser.country}}</h3> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
+  <h5>Favorite artist: {{currentUser.favoriteArtist}}</h5>
+  <img style="height: 80px;" src="{{currentUser.avatar}}">
+  {{#each currentUser.list}}
+  <div class="card bg-dark text-white">
+    {{!-- Alterar o estilo das imagens no CSS --}}
+    <img src={{this.img}} class="card-img" alt="{{this.name}}" style="height: 30vh; object-fit: cover;">
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{this.name}}</h5>
+      <p class="card-text">{{this.date}}</p>
+      <a href="/detailevents/{{this.eventId}}" class="btn btn-dark">More Details</a>
+      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Delete</a>
+    </div>
+  </div>
+  <br><br><br>
   {{/each}}
 {{else}}
   <p>Still no logged in user, sorry!</p>
