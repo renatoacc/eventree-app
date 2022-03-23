@@ -4,7 +4,7 @@ const privateSchema = new Schema({
   name: String,
   img: {
     type: String,
-    default: "images/defaultImage.jpg",
+    default: "shorturl.at/duxAQ",
   },
   info: String,
   date: String,

@@ -1,0 +1,9 @@
+<h3>Detail Private Events</h3>
+
+{{#each data}}
+    <img src={{this.img}} >
+    <h5>Name: {{this.name}}</h5>
+    <p>{{this.info}}</p>
+    <p>Date: {{this.date}}</p>
+    <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
+{{/each}}

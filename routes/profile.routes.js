@@ -4,7 +4,6 @@ const User = require("../models/User.model");
 const Event = require("../models/APIevent.model");
 const Private = require("../models/Privatevent.model");
 
-const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 async function search(filters) {
@@ -13,7 +12,9 @@ async function search(filters) {
     { params: { apikey: "Tzj137hkhXHP4pMeBYhc6BO9P99inCPi", ...filters } }
   );
   const data = answer._embedded.events;
-  return data;
+  return data.map((elem) => {
+    return { ...elem, srcImage: elem.images[3].url };
+  });
 }
 
 router.get("/profile", isLoggedIn, async (req, res, next) => {
@@ -23,7 +24,6 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
   });
   await currentUser.populate("list");
   await currentUser.populate("private");
-  console.log(currentUser);
   res.render("profile/profile", { currentUser });
 });
 
@@ -34,10 +34,8 @@ router.get("/search", isLoggedIn, (req, res, next) => {
 router.post("/search", isLoggedIn, async (req, res, next) => {
   try {
     const searchWord = req.body.search;
-    const data = await search({ keyword: searchWord });
-    const cleanData = data.map((elem) => {
-      return { ...elem, srcImage: elem.images[3].url };
-    });
+    const cleanData = await search({ keyword: searchWord });
+
     res.render("events/search", { cleanData });
   } catch (err) {
     res.render("events/search", {
@@ -50,10 +48,7 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
 router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   try {
     const searchID = req.params.id;
-    const data = await search({ id: searchID });
-    const cleanData = data.map((elem) => {
-      return { ...elem, srcImage: elem.images[3].url };
-    });
+    const cleanData = await search({ id: searchID });
     res.render("events/detailevents", { cleanData });
   } catch (err) {
     res.render("events/search", {
@@ -65,10 +60,7 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
 router.get("/profile/:id/add", isLoggedIn, async (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
-  const data = await search({ id: idEvent }); //Criar uma função do MAP é repetido várias vezes.
-  const eventDetail = data.map((elem) => {
-    return { ...elem, srcImage: elem.images[3].url };
-  });
+  const eventDetail = await search({ id: idEvent });
   const newEvent = {
     eventId: idEvent,
     name: eventDetail[0].name,
@@ -88,13 +80,22 @@ router.get("/profile/:id/delete", isLoggedIn, async (req, res) => {
   try {
     const idEvent = req.params.id;
     const eventList = await User.find({ list: idEvent });
+    const privatEvent = await User.find({ private: idEvent });
+
     eventList.forEach(async (event) => {
       const eventIndex = event.list.indexOf(idEvent);
       event.list.splice(eventIndex, 1);
       await event.save();
     });
 
+    privatEvent.forEach(async (event) => {
+      const eventIndex = event.private.indexOf(idEvent);
+      event.private.splice(eventIndex, 1);
+      await event.save();
+    });
+
     await Event.findByIdAndRemove(idEvent);
+    await Private.findByIdAndDelete(idEvent);
 
     res.redirect("/profile");
   } catch (err) {
@@ -109,9 +110,13 @@ router.get("/addevent", isLoggedIn, (req, res, next) => {
 router.post("/addevent", isLoggedIn, async (req, res, next) => {
   const { name, img, info, date } = req.body;
   const currentUser = req.session.user._id;
+  if (req.body.img === "") {
+    req.body.img = "https://shorturl.at/duxAQ";
+  }
+
   const newPrivateEvent = {
     name,
-    img,
+    img: req.body.img,
     info: info,
     date,
     userId: currentUser,
@@ -121,6 +126,19 @@ router.post("/addevent", isLoggedIn, async (req, res, next) => {
     $push: { private: [newPrivateEventDB] },
   });
   res.redirect("/profile");
+});
+
+router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
+  try {
+    const searchID = req.params.id;
+    const data = await Private.findOne({ _id: searchID });
+    console.log(data);
+    res.render("events/detailprivate", { data: [data] });
+  } catch (err) {
+    res.render("events/search", {
+      errorMessage: "Error",
+    });
+  }
 });
 
 module.exports = router;

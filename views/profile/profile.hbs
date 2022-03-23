@@ -10,8 +10,9 @@
     <div class="card-img-overlay">
       <h5 class="card-title">{{this.name}}</h5>
       <p class="card-text">{{this.date}}</p>
-      <a href="/detailevents/{{this._id}}" class="btn btn-dark">More Details</a>
-      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Delete</a>
+      <a href="/detailprivate/{{this._id}}" class="btn btn-dark">More Details</a>
+      <a href="/profile/{{this._id}}/edit" class="btn btn-dark">Edit</a>
+      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
     </div>
   </div>
   <br><br><br>
@@ -24,7 +25,7 @@
       <h5 class="card-title">{{this.name}}</h5>
       <p class="card-text">{{this.date}}</p>
       <a href="/detailevents/{{this.eventId}}" class="btn btn-dark">More Details</a>
-      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Delete</a>
+      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
     </div>
   </div>
   <br><br><br>
