@@ -14,7 +14,7 @@
 {{/with}}
     <h5>Date: {{this.dates.start.localDate}} - Time: {{this.dates.start.localTime}}</h5>
     <h5><a href={{this.url}} class="btn btn-warning" target="_blank">Buy NOW</a></h5>
-    <h5><a href="/eventadded/{{this.id}}" class="btn btn-dark">Add to your list</a></h5>
+    <h5><a href="/profile/{{this.id}}/add" class="btn btn-dark">Add to your list</a></h5>
     
 {{#with this._embedded.attractions.0.externalLinks}}
     {{#if this.youtube.0.url}}<h5><a href={{this.youtube.0.url}} target="_blank">Youtube</a></h5>{{/if}}

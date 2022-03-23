@@ -61,7 +61,7 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/eventadded/:id", async (req, res, next) => {
+router.get("/profile/:id/add", async (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
   const data = await search({ id: idEvent });
