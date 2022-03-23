@@ -7,7 +7,7 @@ const privateSchema = new Schema({
     default: "shorturl.at/duxAQ",
   },
   info: String,
-  date: String,
+  date: { type: String, required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User" },
 });
 

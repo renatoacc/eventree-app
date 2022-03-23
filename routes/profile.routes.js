@@ -142,6 +142,31 @@ router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.get("/editevent/:id", isLoggedIn, async (req, res, next) => {
+  const eventID = req.params.id;
+  const data = await Private.findById(eventID);
+  res.render("events/editevent", { data: [data] });
+});
+
+router.post("/editevent/:id", isLoggedIn, async (req, res, next) => {
+  const eventId = req.params.id;
+  const { name, info, date } = req.body;
+  const currentUser = req.session.user._id;
+
+  if (req.body.img === "") {
+    req.body.img = "/images/default.jpg";
+  }
+  await Private.findByIdAndUpdate(eventId, {
+    name,
+    img: req.body.img,
+    info: info,
+    date,
+    userId: currentUser,
+  });
+
+  res.redirect("/profile");
+});
+
 module.exports = router;
 
 /* promise
