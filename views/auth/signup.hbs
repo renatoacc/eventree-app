@@ -1,42 +1,29 @@
 <div id="form">
   <h2>SIGN UP</h2>
   <form action="/signup" method="POST">
- 
-    <label class="form-label"> Username
-        <input class="form-control" type="text" name="username" placeholder="Username" />
-    </label>
-
-    <label class="form-label"> Password
-      <input class="form-control" type="password" name="password" placeholder="********" />
-    </label>
-
-    <label class="form-label"> Favorite Artists
-        <input class="form-control" type="text" name="favoriteArtist" placeholder="Favorite Artists" />
-    </label>
-
-    <label class="form-label"> Country
-      <select id="country" class="form-select" name="country">
-        <option selected >Open this select menu</option>
+    <input class="form-control" type="text" name="username" placeholder="Username" />
+    <input class="form-control" type="password" name="password" placeholder="********" />
+    <input class="form-control" type="text" name="favoriteArtist" placeholder="Favorite Artists" />
+    <select id="country" class="form-select" name="country">
+      <option selected >Select Country</option>
         {{#each country}}
           <option value="{{this.value}}">{{this.name}}</option>
         {{/each}}
-      </select>
-    </label>
-
-    <label class="form-label"> Avatar
+    </select>
+    <br>
+    <label class="form-label"> Select Avatar</label>
+    <br>
         {{#each avatar}}
         {{!-- Alterar o estilo das imagens no CSS --}}
         <img style="height: 80px;" class="avatar" id="{{this.src}}" src="{{this.src}}" alt="{{this.name}}">
         {{/each}}
-    </label>
+
     <input id="avatarInput" type="hidden" value="av1" name="avatar">
-    
+    <br>
     <button class="btn btn-light mb-3" type="submit">SIGN UP</button>
- 
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
-    
   </form>
 </div>
 <script>

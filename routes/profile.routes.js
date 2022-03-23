@@ -1,9 +1,8 @@
 const router = require("express").Router();
 const axios = require("axios");
 const User = require("../models/User.model");
-const List = require("../models/List.model");
-const country = require("../models/Country.code");
-const avatar = require("../models/Avatar");
+const Event = require("../models/APIevent.model");
+const Private = require("../models/Privatevent.model");
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
@@ -23,6 +22,8 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
     _id: loggedInUser,
   });
   await currentUser.populate("list");
+  await currentUser.populate("private");
+  console.log(currentUser);
   res.render("profile/profile", { currentUser });
 });
 
@@ -61,29 +62,29 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/profile/:id/add", async (req, res, next) => {
+router.get("/profile/:id/add", isLoggedIn, async (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
-  const data = await search({ id: idEvent });
+  const data = await search({ id: idEvent }); //Criar uma função do MAP é repetido várias vezes.
   const eventDetail = data.map((elem) => {
     return { ...elem, srcImage: elem.images[3].url };
   });
-  console.log(eventDetail);
-  const newList = {
+  const newEvent = {
     eventId: idEvent,
     name: eventDetail[0].name,
     img: eventDetail[0].srcImage,
     date: eventDetail[0].dates.start.localDate,
+    userId: currentUserId,
   };
 
-  let newListDB = await List.create(newList);
+  let newEventDB = await Event.create(newEvent);
   await User.findByIdAndUpdate(currentUserId, {
-    $push: { list: [newListDB] },
+    $push: { list: [newEventDB] },
   });
   res.redirect("/profile");
 });
 
-router.get("/profile/:id/delete", async (req, res) => {
+router.get("/profile/:id/delete", isLoggedIn, async (req, res) => {
   try {
     const idEvent = req.params.id;
     const eventList = await User.find({ list: idEvent });
@@ -93,7 +94,7 @@ router.get("/profile/:id/delete", async (req, res) => {
       await event.save();
     });
 
-    await List.findByIdAndRemove(idEvent);
+    await Event.findByIdAndRemove(idEvent);
 
     res.redirect("/profile");
   } catch (err) {
@@ -101,15 +102,37 @@ router.get("/profile/:id/delete", async (req, res) => {
   }
 });
 
+router.get("/addevent", isLoggedIn, (req, res, next) => {
+  res.render("events/addevent");
+});
+
+router.post("/addevent", isLoggedIn, async (req, res, next) => {
+  const { name, img, info, date } = req.body;
+  const currentUser = req.session.user._id;
+  const newPrivateEvent = {
+    name,
+    img,
+    info: info,
+    date,
+    userId: currentUser,
+  };
+  let newPrivateEventDB = await Private.create(newPrivateEvent);
+  await User.findByIdAndUpdate(currentUser, {
+    $push: { private: [newPrivateEventDB] },
+  });
+  res.redirect("/profile");
+});
+
 module.exports = router;
 
-/*
+/* promise
+
 router.get("/eventadded/:id", (req, res, next) => {
   const idEvent = req.params.id;
   const currentUserId = req.session.user._id;
   
 
-  List.create({ eventId: idEvent, userId: currentUserId })
+  Event.create({ eventId: idEvent, userId: currentUserId })
 
     .then((dbList) => {
       const create = User.findByIdAndUpdate(currentUserId, {
@@ -121,7 +144,7 @@ router.get("/eventadded/:id", (req, res, next) => {
       console.log(`Err while adding the event in the DB: ${err}`);
       next(err);
     });
-  List.find()
+  Event.find()
     .populate("userId")
     .then((dblist) => {
       console.log("Posts from the DB: ", dblist);

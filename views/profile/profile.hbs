@@ -3,6 +3,19 @@
   <h3>Country: {{currentUser.country}}</h3> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
   <h5>Favorite artist: {{currentUser.favoriteArtist}}</h5>
   <img style="height: 80px;" src="{{currentUser.avatar}}">
+  {{#each currentUser.private}}
+    <div class="card bg-dark text-white">
+    {{!-- Alterar o estilo das imagens no CSS --}}
+    <img src={{this.img}} class="card-img" alt="{{this.name}}" style="height: 30vh; object-fit: cover;">
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{this.name}}</h5>
+      <p class="card-text">{{this.date}}</p>
+      <a href="/detailevents/{{this._id}}" class="btn btn-dark">More Details</a>
+      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Delete</a>
+    </div>
+  </div>
+  <br><br><br>
+  {{/each}}
   {{#each currentUser.list}}
   <div class="card bg-dark text-white">
     {{!-- Alterar o estilo das imagens no CSS --}}
