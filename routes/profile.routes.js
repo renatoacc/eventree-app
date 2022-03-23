@@ -108,10 +108,11 @@ router.get("/addevent", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/addevent", isLoggedIn, async (req, res, next) => {
-  const { name, img, info, date } = req.body;
+  const { name, info, date } = req.body;
   const currentUser = req.session.user._id;
+
   if (req.body.img === "") {
-    req.body.img = "https://shorturl.at/duxAQ";
+    req.body.img = "/images/default.jpg";
   }
 
   const newPrivateEvent = {
