@@ -19,13 +19,17 @@ async function search(filters) {
 }
 
 router.get("/profile", isLoggedIn, async (req, res, next) => {
-  const loggedInUser = req.session.user._id;
-  let currentUser = await User.findOne({
-    _id: loggedInUser,
-  });
-  await currentUser.populate("list");
-  await currentUser.populate("private");
-  res.render("profile/profile", { currentUser, login: loggedInUser });
+  try {
+    const loggedInUser = req.session.user._id;
+    let currentUser = await User.findOne({
+      _id: loggedInUser,
+    });
+    await currentUser.populate("list");
+    await currentUser.populate("private");
+    res.render("profile/profile", { currentUser, login: loggedInUser });
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 router.get("/search", isLoggedIn, (req, res, next) => {
@@ -62,22 +66,27 @@ router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
 });
 
 router.get("/profile/:id/add", isLoggedIn, async (req, res, next) => {
-  const idEvent = req.params.id;
-  const currentUserId = req.session.user._id;
-  const eventDetail = await search({ id: idEvent });
-  const newEvent = {
-    eventId: idEvent,
-    name: eventDetail[0].name,
-    img: eventDetail[0].srcImage,
-    date: eventDetail[0].dates.start.localDate,
-    userId: currentUserId,
-  };
+  try {
+    const idEvent = req.params.id;
+    const currentUserId = req.session.user._id;
 
-  let newEventDB = await Event.create(newEvent);
-  await User.findByIdAndUpdate(currentUserId, {
-    $push: { list: [newEventDB] },
-  });
-  res.redirect("/profile");
+    const eventDetail = await search({ id: idEvent });
+    const newEvent = {
+      eventId: idEvent,
+      name: eventDetail[0].name,
+      img: eventDetail[0].srcImage,
+      date: eventDetail[0].dates.start.localDate,
+      userId: currentUserId,
+    };
+
+    let newEventDB = await Event.create(newEvent);
+    await User.findByIdAndUpdate(currentUserId, {
+      $push: { list: [newEventDB] },
+    });
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 router.get("/profile/:id/delete", isLoggedIn, async (req, res) => {
@@ -113,25 +122,29 @@ router.get("/addevent", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/addevent", isLoggedIn, async (req, res, next) => {
-  const { name, info, date } = req.body;
-  const currentUser = req.session.user._id;
+  try {
+    const { name, info, date } = req.body;
+    const currentUser = req.session.user._id;
 
-  if (req.body.img === "") {
-    req.body.img = "/images/default.jpg";
+    if (req.body.img === "") {
+      req.body.img = "/images/default.jpg";
+    }
+
+    const newPrivateEvent = {
+      name,
+      img: req.body.img,
+      info: info,
+      date,
+      userId: currentUser,
+    };
+    let newPrivateEventDB = await Private.create(newPrivateEvent);
+    await User.findByIdAndUpdate(currentUser, {
+      $push: { private: [newPrivateEventDB] },
+    });
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
   }
-
-  const newPrivateEvent = {
-    name,
-    img: req.body.img,
-    info: info,
-    date,
-    userId: currentUser,
-  };
-  let newPrivateEventDB = await Private.create(newPrivateEvent);
-  await User.findByIdAndUpdate(currentUser, {
-    $push: { private: [newPrivateEventDB] },
-  });
-  res.redirect("/profile");
 });
 
 router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
@@ -155,22 +168,26 @@ router.get("/editevent/:id", isLoggedIn, async (req, res, next) => {
 });
 
 router.post("/editevent/:id", isLoggedIn, async (req, res, next) => {
-  const eventId = req.params.id;
-  const { name, info, date } = req.body;
-  const currentUser = req.session.user._id;
+  try {
+    const eventId = req.params.id;
+    const { name, info, date } = req.body;
+    const currentUser = req.session.user._id;
 
-  if (req.body.img === "") {
-    req.body.img = "/images/default.jpg";
+    if (req.body.img === "") {
+      req.body.img = "/images/default.jpg";
+    }
+    await Private.findByIdAndUpdate(eventId, {
+      name,
+      img: req.body.img,
+      info: info,
+      date,
+      userId: currentUser,
+    });
+
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
   }
-  await Private.findByIdAndUpdate(eventId, {
-    name,
-    img: req.body.img,
-    info: info,
-    date,
-    userId: currentUser,
-  });
-
-  res.redirect("/profile");
 });
 
 module.exports = router;

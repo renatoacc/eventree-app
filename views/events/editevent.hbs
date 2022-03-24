@@ -1,11 +1,11 @@
-<h3>Edit Event</h3>
+<h3 id="h2S">Edit Event</h3>
 {{#each data}}
-<form action="/editevent/{{this._id}}" method="POST">
+<form action="/editevent/{{this._id}}" method="POST" id="addEvent">
     <input class="form-control" type="text" name="name" value="{{this.name}}" placeholder="Event Name"/>
     <input class="form-control" type="text" name="img" value="{{this.img}}" placeholder="Event URL Image"/>
     <input class="form-control" type="text" name="info" value="{{this.info}}" placeholder="Event Information"/>
     <input class="form-control" type="date" value="{{this.data}}" name="date"/>
-    <button class="btn btn-light mb-3" type="submit">Edit Event</button>
-    <a href="/profile" class="btn btn-dark">Cancel</a>
+    <button class="btn detBtn" type="submit" id="btnEdit">Edit Event</button>
+    <a href="/profile" class="btn detBtn">Cancel</a>
 </form>
 {{/each}}

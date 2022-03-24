@@ -1,30 +1,24 @@
 <div id="divProfile" class="container"></div>
 <div id="divInfo">
 {{#if currentUser}}
-  <p id="h3Pr">Welcome, {{ currentUser.username }}!</p>
-  <p class="parProf">Country: {{currentUser.country}}</p> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
+  <div id="userInfo"><p id="h3Pr"> Welcome, {{ currentUser.username }}!</p> <img id="profAvatar" class="avatarImg" src="{{currentUser.avatar}}"></div>
+  <p class="parProf">Country: {{currentUser.country}}</p>
   <p class="parProf">Favorite artist: {{currentUser.favoriteArtist}}</p>
-  <img class="avatarImg" src="{{currentUser.avatar}}">
-
 </div>
-
-
   {{#each currentUser.private}}
     <div class="card bg-dark text-white">
-    {{!-- Alterar o estilo das imagens no CSS --}}
     <img src={{this.img}} class="card-img" alt="{{this.name}}" style="height: 30vh; object-fit: cover;">
     <div class="card-img-overlay">
-      <h5 class="card-title">{{this.name}}</h5>
-      <p class="card-text">{{this.date}}</p>
-      <a href="/detailprivate/{{this._id}}" class="btn btn-dark">More Details</a>
-      <a href="/editevent/{{this._id}}" class="btn btn-dark">Edit</a>
-      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
+      <h5 class="card-title" id="list-name">{{this.name}}</h5>
+      <p class="card-text" id="list-date">{{this.date}}</p>
+      <a href="/detailprivate/{{this._id}}" class="btn detBtn">More Details</a>
+      <a href="/editevent/{{this._id}}" class="btn detBtn">Edit</a>
+      <a href="/profile/{{this._id}}/delete" class="btn detBtn">Delete</a>
     </div>
   </div>
   {{/each}}
   {{#each currentUser.list}}
   <div class="card bg-dark text-white">
-    {{!-- Alterar o estilo das imagens no CSS --}}
     <img src={{this.img}} class="card-img" alt="{{this.name}}" style="height: 30vh; object-fit: cover;">
     <div class="card-img-overlay">
       <h5 class="card-title" id="list-name">{{this.name}}</h5>

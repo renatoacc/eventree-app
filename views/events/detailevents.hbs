@@ -1,3 +1,4 @@
+<div id="detailsInfo">
 {{#each cleanData}}
 <img src={{this.srcImage}} class="img-fluid" id="detImg" alt={{this.name}}>
 <h3 id="h3D">{{this.name}}</h3>
@@ -14,12 +15,7 @@
     <h5 class="h5D">Country: {{this.0.country.name}} - {{this.0.country.countryCode}}</h5>
 {{/with}}
     <h5 class="h5D">Date: {{this.dates.start.localDate}} - Time: {{this.dates.start.localTime}}</h5>
-    <div class="contBts">
-    <h5><a href="/profile/{{this.id}}/add" class="btn details">Add to your list</a></h5>
-    <h5 class="h5D"><a href={{this.url}} class="btn details" target="_blank">Buy now</a></h5>
-    </div>
-    
-    
+<div id="socialMedia"> 
 {{#with this._embedded.attractions.0.externalLinks}}
     {{#if this.youtube.0.url}}
     <h5>
@@ -51,4 +47,10 @@
     </h5>
     {{/if}}
 {{/with}}
+
+</div>
+    <div class="contBts">
+    <h5><a href="/profile/{{this.id}}/add" class="btn details">Add to your list</a></h5>
+    <h5><a href={{this.url}} class="btn details" target="_blank">Buy now</a></h5>
+    </div>
 {{/each}}
