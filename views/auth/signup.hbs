@@ -32,6 +32,9 @@
     const avatarSrc = elem.id;
     elem.addEventListener("click", () => {
         document.getElementById("avatarInput").value = avatarSrc;
+        allAvatar.forEach((elem) => {
+          elem.style.border="none";
+        })
         document.getElementById(avatarSrc).style.border= "1px solid black";
     });
       
