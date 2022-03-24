@@ -1,25 +1,29 @@
-<h2>Search</h2>
+<h2 id="h2S">Search</h2>
+
 <form action="/search" method="POST" class="d-flex">
-    <input class="form-control me-2" name="search" type="search" placeholder="Search for event/team/band/concert" aria-label="Search">
-    <button class="btn btn-light" type="submit">Search</button>
+    <input class="form-control me-2" name="search" type="search" placeholder="Search for an event" aria-label="Search">
+    <button class="btn searchBt" type="submit">Search</button>
 </form>
+
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
+
+
 <div class="row row-cols-1 row-cols-md-2 g-4">
 {{#each cleanData}}
   <div class="col">
-    <div class="card">
+    <div id="box" class="card">
       <img src={{this.srcImage}} class="card-img-top" style="height: 50vh;object-fit: cover;"> {{!-- Ver tamanhos da imagem --}}
       <div class="card-body">
-        <h5 class="card-title">{{this.name}}</h5>
+        <h5 class="h3D">{{this.name}}</h5>
         {{#with this._embedded}}
-        <p class="card-text">Local: {{venues.0.name}}</p>
-        <p class="card-text">City: {{venues.0.city.name}}</p>
-        <p class="card-text">Country: {{venues.0.country.name}}, {{venues.0.country.countryCode}}</p>
+        <p class="card-text h5D">Local: {{venues.0.name}}</p>
+        <p class="card-text h5D">City: {{venues.0.city.name}}</p>
+        <p class="card-text h5D">Country: {{venues.0.country.name}}, {{venues.0.country.countryCode}}</p>
         {{/with}}
         {{#with this.dates}}
-        <p class="card-text"><small class="text-muted">Data: {{start.localDate}}</small></p>
+        <p class="card-text"><small class="h5D">Data: {{start.localDate}}</small></p>
         {{/with}}
         <a href={{this.url}}  class="btn btn-warning" target="_blank" >Buy your Ticket's here</a>
         <br>
