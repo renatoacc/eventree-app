@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const axios = require("axios");
 const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 
@@ -110,10 +109,6 @@ router.get("/logout", isLoggedIn, (req, res) => {
     }
     res.redirect("/");
   });
-});
-
-router.get("/logout", isLoggedOut, (req, res) => {
-  res.redirect("/login", { errorMessage: "Please login" });
 });
 
 module.exports = router;

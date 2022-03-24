@@ -2,7 +2,6 @@ body {
  background-image: linear-gradient(to right, #0F2027, #203A43, #2C5364, #2C5364, #203A43, #0F2027) !important;
  padding: 0 !important;
  margin: 0 !important;
- 
 }
   
 /*HOMEPAGE*/
@@ -13,6 +12,9 @@ body {
   height: 20%;
   margin-top: 15%;
   margin-left: 35%;
+  margin: 0;
+  padding: 0px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 @keyframes slide-in-bck-center{0%{transform:translateZ(600px);opacity:0}100%{transform:translateZ(0);opacity:1}}

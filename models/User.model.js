@@ -19,7 +19,8 @@ const userSchema = new Schema({
     type: String,
     default: "images/avatar/1.jpg",
   },
-  list: [{ type: Schema.Types.ObjectId, ref: "List" }],
+  list: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+  private: [{ type: Schema.Types.ObjectId, ref: "Private" }],
 });
 
 const User = model("User", userSchema);

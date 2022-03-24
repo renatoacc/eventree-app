@@ -8,6 +8,19 @@
 </div>
 
 
+  {{#each currentUser.private}}
+    <div class="card bg-dark text-white">
+    {{!-- Alterar o estilo das imagens no CSS --}}
+    <img src={{this.img}} class="card-img" alt="{{this.name}}" style="height: 30vh; object-fit: cover;">
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{this.name}}</h5>
+      <p class="card-text">{{this.date}}</p>
+      <a href="/detailprivate/{{this._id}}" class="btn btn-dark">More Details</a>
+      <a href="/editevent/{{this._id}}" class="btn btn-dark">Edit</a>
+      <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
+    </div>
+  </div>
+  {{/each}}
   {{#each currentUser.list}}
   <div class="card bg-dark text-white">
     {{!-- Alterar o estilo das imagens no CSS --}}
@@ -19,7 +32,6 @@
       <a href="/profile/{{this._id}}/delete" class="btn detBtn">Delete</a>
     </div>
   </div>
-  <br><br><br>
   {{/each}}
 {{else}}
   <p>Still no logged in user, sorry!</p>

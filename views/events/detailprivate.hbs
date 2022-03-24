@@ -1,0 +1,9 @@
+{{#each data}}
+    <img src={{this.img}} class="img-fluid">
+    <h5>Name: {{this.name}}</h5>
+    <p>{{this.info}}</p>
+    <p>Date: {{this.date}}</p>
+    <a href="/editevent/{{this._id}}" class="btn btn-dark">edit</a>
+    <a href="/profile/{{this._id}}/delete" class="btn btn-dark">Remove</a>
+{{/each}}
+

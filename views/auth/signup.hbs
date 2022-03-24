@@ -39,20 +39,35 @@
 
 <div class="col">
     <label class="form-label"> Avatar
+<div id="form">
+  <h2>SIGN UP</h2>
+  <form action="/signup" method="POST">
+    <input class="form-control" type="text" name="username" placeholder="Username" />
+    <input class="form-control" type="password" name="password" placeholder="********" />
+    <input class="form-control" type="text" name="favoriteArtist" placeholder="Favorite Artists" />
+    <select id="country" class="form-select" name="country">
+      <option selected >Select Country</option>
+        {{#each country}}
+          <option value="{{this.value}}">{{this.name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    <label class="form-label"> Select Avatar</label>
     <br>
         {{#each avatar}}
         {{!-- Alterar o estilo das imagens no CSS --}}
         <img style="height: 80px;" class="avatar" id="{{this.src}}" src="{{this.src}}" alt="{{this.name}}">
         {{/each}}
-    </label>
+
     <input id="avatarInput" type="hidden" value="av1" name="avatar">
     </div>
     <button id = "signupBtn" class="btn mb-3" type="submit">SIGN UP</button>
  
+    <br>
+    <button class="btn btn-light mb-3" type="submit">SIGN UP</button>
     {{#if errorMessage}}
       <p class="error">{{errorMessage}}</p>
     {{/if}}
-    
   </form>
   </div>
 </div>
@@ -65,7 +80,13 @@
   allAvatar.forEach((elem, index) => {
     const avatarSrc = elem.id;
     elem.addEventListener("click", () => {
-      document.getElementById("avatarInput").value = avatarSrc;
-    })
+        document.getElementById("avatarInput").value = avatarSrc;
+        allAvatar.forEach((elem) => {
+          elem.style.border="none";
+        })
+        document.getElementById(avatarSrc).style.border= "1px solid black";
+    });
+      
+
   })
 </script>
