@@ -17,7 +17,7 @@ const userSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: "images/avatar/1.jpg",
+    default: "images/avatar/1.png",
   },
   list: [{ type: Schema.Types.ObjectId, ref: "Event" }],
   private: [{ type: Schema.Types.ObjectId, ref: "Private" }],
