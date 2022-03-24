@@ -10,7 +10,7 @@ const { EventEmitter } = require("connect-mongo");
 async function search(filters) {
   const { data: answer } = await axios.get(
     "https://app.ticketmaster.com/discovery/v2/events.json",
-    { params: { apikey: "Tzj137hkhXHP4pMeBYhc6BO9P99inCPi", ...filters } }
+    { params: { apikey: process.env.apikey, ...filters } }
   );
   const data = answer._embedded.events;
   return data.map((elem) => {

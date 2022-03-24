@@ -3,17 +3,14 @@ const bcryptjs = require("bcryptjs");
 const saltRounds = 10;
 
 const User = require("../models/User.model");
-const country = require("../models/Country.code");
-const avatar = require("../models/Avatar");
+const countryCode = require("../models/Country.code");
+const avatarIMG = require("../models/Avatar");
 
 const isLoggedOut = require("../middleware/isLoggedOut");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", isLoggedOut, (req, res, next) => {
-  console.log(country);
-  console.log(avatar);
-  res.render("auth/signup", { avatar, country });
-  // res.render("auth/signup");
+  res.render("auth/signup", { avatarIMG, countryCode });
 });
 
 router.post("/signup", isLoggedOut, (req, res, next) => {
@@ -21,24 +18,36 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
   const { username, password, favoriteArtist, country, avatar } = req.body;
 
   if (!username || !password) {
+    console.log("This is country", country);
+    console.log("This is avatar", avatar);
     res.render("auth/signup", {
+      avatarIMG,
+      countryCode,
       errorMessage: "Please provide your username and password.",
     });
     return;
   }
 
   if (password.length < 8) {
-    return res.status(400).render("auth/signup", {
+    console.log(country);
+    res.render("auth/signup", {
+      avatarIMG,
+      countryCode,
       errorMessage: "Your password needs to be at least 8 characters long.",
     });
+    return;
   }
 
   User.findOne({ username }).then((found) => {
     // If the user is found, send the message username is taken
     if (found) {
-      return res
-        .status(400)
-        .render("auth/signup", { errorMessage: "The username you choose is already taken." });
+      console.log(country);
+      res.render("auth/signup", {
+        avatarIMG,
+        countryCode,
+        errorMessage: "The username you choose is already taken.",
+      });
+      return;
     }
 
     bcryptjs
@@ -55,11 +64,10 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
       })
       .then((user) => {
         req.session.user = user;
-        res.redirect("/");
+        res.redirect("/profile");
       })
       .then((userFromDB) => {
-        console.log("Newly created user is: ", userFromDB);
-        res.redirect("/");
+        res.redirect("/profile");
       })
       .catch((error) => {
         next(error);
@@ -85,7 +93,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .then((user) => {
       if (!user) {
         res.render("auth/login", {
-          errorMessage: "The username you entered is incorrect. Please try again.",
+          errorMessage:
+            "The username you entered is incorrect. Please try again.",
         });
         return;
       }
@@ -96,7 +105,8 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         res.redirect("/profile");
       }
       res.render("auth/login", {
-        errorMessage: "The password you entered is incorrect. Please try again.",
+        errorMessage:
+          "The password you entered is incorrect. Please try again.",
       });
     })
     .catch((error) => next(error));

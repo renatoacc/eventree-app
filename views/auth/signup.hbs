@@ -21,8 +21,8 @@
 <div class="col">
     <label class="form-label"> Country
       <select id="country" class="form-select" name="country">
-        <option selected >Select your country</option>
-        {{#each country}}
+        <option>Select your country</option>
+        {{#each countryCode}}
           <option value="{{this.value}}">{{this.name}}</option>
         {{/each}}
       </select>
@@ -32,13 +32,14 @@
 <div class="col">
     <label class="form-label"> Avatar </label>
     <br>
-        {{#each avatar}}
+        {{#each avatarIMG}}
         {{!-- Alterar o estilo das imagens no CSS --}}
         <img style="height: 80px; border-radius: 50%;" class="avatar" id="{{this.src}}" src="{{this.src}}" alt="{{this.name}}">
         {{/each}}
         <input id="avatarInput" type="hidden" value="av1" name="avatar">
+        <button id = "signupBtn" class="btn mb-3" type="submit">SIGN UP</button>
     {{#if errorMessage}}
-      <p class="error">{{errorMessage}}</p>
+      <p>{{errorMessage}}</p>
     {{/if}}
 </div>
 

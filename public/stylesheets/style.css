@@ -182,7 +182,12 @@ body {
 #h2S{
   color: white;
   margin-top: 1%;
+  margin-left: 5%;
   font-size: 50px;
+}
+
+#searchBar{
+  margin-left: 5%;
 }
 
 .searchBt {
@@ -197,7 +202,16 @@ body {
   color: white;
 }
 
+#divInfo{
+  margin-left: 5%;
+}
 
+.avatarImg{
+
+  height: 80px; 
+  border-radius: 50%; 
+  border: 2px solid white;
+}
 
 .btn:hover {
   color: #3b87a7;
