@@ -10,7 +10,7 @@ const { EventEmitter } = require("connect-mongo");
 async function search(filters) {
   const { data: answer } = await axios.get(
     "https://app.ticketmaster.com/discovery/v2/events.json",
-    { params: { apikey: "Tzj137hkhXHP4pMeBYhc6BO9P99inCPi", ...filters } }
+    { params: { apikey: process.env.apikey, ...filters } }
   );
   const data = answer._embedded.events;
   return data.map((elem) => {
@@ -139,8 +139,7 @@ router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
     const loggedInUser = req.session.user._id;
     const searchID = req.params.id;
     const data = await Private.findOne({ _id: searchID });
-    console.log(data);
-    res.render("events/detailprivate", { data: [data] });
+    res.render("events/detailprivate", { data: [data], login: loggedInUser });
   } catch (err) {
     res.render("events/search", {
       errorMessage: "Error",
@@ -149,6 +148,7 @@ router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
 });
 
 router.get("/editevent/:id", isLoggedIn, async (req, res, next) => {
+  const loggedInUser = req.session.user._id;
   const eventID = req.params.id;
   const data = await Private.findById(eventID);
   res.render("events/editevent", { data: [data], login: loggedInUser });
