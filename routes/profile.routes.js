@@ -25,19 +25,21 @@ router.get("/profile", isLoggedIn, async (req, res, next) => {
   });
   await currentUser.populate("list");
   await currentUser.populate("private");
-  res.render("profile/profile", { currentUser });
+  res.render("profile/profile", { currentUser, login: loggedInUser });
 });
 
 router.get("/search", isLoggedIn, (req, res, next) => {
-  res.render("events/search");
+  const loggedInUser = req.session.user._id;
+  res.render("events/search", { login: loggedInUser });
 });
 
 router.post("/search", isLoggedIn, async (req, res, next) => {
   try {
+    const loggedInUser = req.session.user._id;
     const searchWord = req.body.search;
     const cleanData = await search({ keyword: searchWord });
 
-    res.render("events/search", { cleanData });
+    res.render("events/search", { cleanData, login: loggedInUser });
   } catch (err) {
     res.render("events/search", {
       errorMessage:
@@ -48,9 +50,10 @@ router.post("/search", isLoggedIn, async (req, res, next) => {
 
 router.get("/detailevents/:id", isLoggedIn, async (req, res, next) => {
   try {
+    const loggedInUser = req.session.user._id;
     const searchID = req.params.id;
     const cleanData = await search({ id: searchID });
-    res.render("events/detailevents", { cleanData });
+    res.render("events/detailevents", { cleanData, login: loggedInUser });
   } catch (err) {
     res.render("events/search", {
       errorMessage: "Error",
@@ -105,7 +108,8 @@ router.get("/profile/:id/delete", isLoggedIn, async (req, res) => {
 });
 
 router.get("/addevent", isLoggedIn, (req, res, next) => {
-  res.render("events/addevent");
+  const loggedInUser = req.session.user._id;
+  res.render("events/addevent", { login: loggedInUser });
 });
 
 router.post("/addevent", isLoggedIn, async (req, res, next) => {
@@ -132,6 +136,7 @@ router.post("/addevent", isLoggedIn, async (req, res, next) => {
 
 router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
   try {
+    const loggedInUser = req.session.user._id;
     const searchID = req.params.id;
     const data = await Private.findOne({ _id: searchID });
     console.log(data);
@@ -146,7 +151,7 @@ router.get("/detailprivate/:id", isLoggedIn, async (req, res, next) => {
 router.get("/editevent/:id", isLoggedIn, async (req, res, next) => {
   const eventID = req.params.id;
   const data = await Private.findById(eventID);
-  res.render("events/editevent", { data: [data] });
+  res.render("events/editevent", { data: [data], login: loggedInUser });
 });
 
 router.post("/editevent/:id", isLoggedIn, async (req, res, next) => {
