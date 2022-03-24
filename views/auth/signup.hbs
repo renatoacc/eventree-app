@@ -15,17 +15,15 @@
 </div>
 
 <div class="col">
-    <label class="form-label"> Country
       <select id="country" class="form-select" name="country">
         <option>Select your country</option>
         {{#each countryCode}}
           <option value="{{this.value}}">{{this.name}}</option>
         {{/each}}
       </select>
-    </label>
 </div>
 
-<div class="col">
+<div id="avatarDiv" class="col">
     <label class="form-label"> Avatar </label>
     <br>
         {{#each avatarIMG}}

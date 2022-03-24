@@ -9,7 +9,7 @@ body {
 #homepageImg {
   width:30%;
   height: 20%;
-  margin-top: 15%;
+  margin-top: 20%;
   margin-left: 35%;
 }
 
@@ -52,7 +52,8 @@ body {
 
 #divSignUp {
   display: flex !important;
-  justify-content: center !important; 
+  justify-content: center !important;
+  flex-direction: column;
 }
 
 #h2SU {
@@ -72,6 +73,7 @@ body {
   font-size: 30px;
   line-height: 55px;
   font-weight: 600;
+  margin: 2%;
 }
 
 .form-control{
@@ -89,13 +91,20 @@ body {
   border-color: #0F2027;
   color: white;
   width: 50vw;
+  margin: 2%;
 }
+
+#avatarDiv{
+  margin-left: 6%;
+}
+
 #suFlex{
   justify-content: center;
 }
 
 #signupBtn{
-  margin-top: 3%;
+  margin-top: 6%;
+  margin-left: 45%;
   background-color: #0F2027;
   border-color: #0F2027;
   color: white;
@@ -104,11 +113,14 @@ body {
 /*LOGIN*/
 
 #divLogIn{
+  margin-top: 10%;
   display: flex !important;
   flex-direction: column;
 }
 
 #h2LI{
+  display: flex;
+  justify-content: center;
   color: white;
   margin-top: 3%;
   font-size: 50px;
@@ -118,12 +130,17 @@ body {
   margin-top: 2%;
   color: white;
   font-size: 1vw;
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
 }
 
 #logInBtn{
   background-color: #0F2027;
   border-color: #0F2027;
   color: white;
+  width: 14%;
+  margin-left: 31%;
 }
 
 /*Profile*/
