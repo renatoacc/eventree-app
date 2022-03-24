@@ -1,13 +1,201 @@
 body {
-  margin: 0;
-  padding: 0px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ background-image: linear-gradient(to right, #0F2027, #203A43, #2C5364, #2C5364, #203A43, #0F2027) !important;
+ padding: 0 !important;
+ margin: 0 !important;
+}
+  
+/*HOMEPAGE*/
+
+#homepageImg {
+  width:30%;
+  height: 20%;
+  margin-top: 15%;
+  margin-left: 35%;
 }
 
-a {
-  color: #00b7ff;
+@keyframes slide-in-bck-center{
+  0%{transform:translateZ(600px);opacity:0}100%{transform:translateZ(0);opacity:1}
 }
 
-h1 {
-  color: 15px;
+.slide-in-bck-center{
+  animation:slide-in-bck-center 6s cubic-bezier(.25,.46,.45,.94) both;
 }
+
+/*SING UP*/
+
+#divSignUp {
+  display: flex !important;
+  justify-content: center !important; 
+  
+}
+
+#h2SU {
+  color: white;
+  margin-top: 3%;
+  font-size: 50px;
+}
+
+#formSignUp {
+  margin-top: 2%;
+}
+
+.form-label{
+  color: white;
+  font-size: 30px;
+  line-height: 55px;
+  font-weight: 600;
+}
+
+.form-control{
+  background-color: #0F2027;
+  border-color: #0F2027;
+}
+
+.form-select{
+  background-color: #0F2027;
+  border-color: #0F2027;
+  color: gray;
+}
+
+#signupBtn{
+  margin-top: 3%;
+  background-color: #0F2027;
+  border-color: #0F2027;
+  color: gray;
+}
+
+/*LOGIN*/
+
+#divLogIn{
+  display: flex !important;
+  flex-direction: column;
+}
+
+#h2LI{
+  color: white;
+  margin-top: 3%;
+  font-size: 50px;
+}
+
+#formLI{
+  margin-top: 2%;
+}
+
+#logInBtn{
+  background-color: #0F2027;
+  border-color: #0F2027;
+  color: gray;
+}
+
+/*Profile*/
+
+#divProfile{
+  display: flex !important;
+  flex-direction: column;
+}
+
+#h2Pr{
+  color: white;
+  margin-top: 3%;
+  font-size: 50px;
+}
+
+#h3Pr{
+  color: white;
+  margin-top: 2%;
+  font-size: 30px;
+}
+
+#h5Pr{
+  color: white;
+  margin-top: 2%;
+  font-size: 25px;
+}
+
+.card {
+  margin: 50px;
+}
+
+.detBtn {
+  background-color: #0F2027;
+  border-color: #0F2027;
+  color: white;
+  margin-top: 5%;
+}
+
+#list-date{
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#list-name{
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/*DETAILS*/
+
+#h3D{
+  color: white;
+  margin-top: 1%;
+  font-size: 30px;
+}
+
+.h5D{
+  color: white;
+  font-size: 20px;
+  line-height: 35px;;
+}
+
+.details{
+  background-color: #04080a;
+  border-color: #0F2027;
+  color: white;
+}
+
+.contBts{
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+#detImg{
+  margin-top: 1%;
+  height: 40vh; 
+  object-fit: cover;
+}
+
+.description{
+  text-align: justify;
+  font-style: italic;
+  color: white;
+}
+
+.link{
+  text-decoration: none;
+  color: white;
+  
+}
+
+/*SEARCH RESULTS*/
+
+#h2S{
+  color: white;
+  margin-top: 1%;
+  font-size: 50px;
+}
+
+.searchBt {
+  background-color: #0F2027;
+  border-color: #0F2027;
+  color: white;
+}
+
+#box{
+  border-color: #0F2027;
+  background-color: #0F2027;
+  color: white;
+}
+
+
+

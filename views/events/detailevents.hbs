@@ -1,26 +1,54 @@
 {{#each cleanData}}
-<img src={{this.srcImage}} class="img-fluid" alt={{this.name}}>
-<h3>{{this.name}}</h3>
-{{#if this.info}}<p>{{this.info}}</p>{{/if}}
+<img src={{this.srcImage}} class="img-fluid" id="detImg" alt={{this.name}}>
+<h3 id="h3D">{{this.name}}</h3>
+{{#if this.info}}
+<p class="description">{{this.info}}</p>{{/if}}
 {{#with this.classifications}}
-    <h5>Evente type: {{this.0.segment.name}}</h5>
-    <h5>Genre: {{this.0.genre.name}}</h5>
+    <h5 class="h5D">Type of event: {{this.0.segment.name}}</h5>
+    <h5 class="h5D">Genre: {{this.0.genre.name}}</h5>
 {{/with}}
-    <h5>Price ranges: ${{this.priceRanges.0.min}} - ${{this.priceRanges.0.max}}</h5>
+    <h5 class="h5D">Price ranges: ${{this.priceRanges.0.min}} - ${{this.priceRanges.0.max}}</h5>
 {{#with this._embedded.venues}}
-    <h5>Local: {{this.0.name}}</h5>
-    <h5>City: {{this.0.city.name}}</h5>
-    <h5>Country: {{this.0.country.name}} - {{this.0.country.countryCode}}</h5>
+    <h5 class="h5D">Local: {{this.0.name}}</h5>
+    <h5 class="h5D">City: {{this.0.city.name}}</h5>
+    <h5 class="h5D">Country: {{this.0.country.name}} - {{this.0.country.countryCode}}</h5>
 {{/with}}
-    <h5>Date: {{this.dates.start.localDate}} - Time: {{this.dates.start.localTime}}</h5>
-    <h5><a href={{this.url}} class="btn btn-warning" target="_blank">Buy Ticket's</a></h5>
-    <h5><a href="/profile/{{this.id}}/add" class="btn btn-dark">Add</a></h5>
+    <h5 class="h5D">Date: {{this.dates.start.localDate}} - Time: {{this.dates.start.localTime}}</h5>
+    <div class="contBts">
+    <h5><a href="/profile/{{this.id}}/add" class="btn details">Add to your list</a></h5>
+    <h5 class="h5D"><a href={{this.url}} class="btn details" target="_blank">Buy now</a></h5>
+    </div>
+    
     
 {{#with this._embedded.attractions.0.externalLinks}}
-    {{#if this.youtube.0.url}}<h5><a href={{this.youtube.0.url}} target="_blank">Youtube</a></h5>{{/if}}
-    {{#if this.twitter.0.url}}<h5><a href={{this.twitter.0.url}} target="_blank">Twitter</a></h5>{{/if}}
-    {{#if this.spotify.0.url}}<h5><a href={{this.spotify.0.url}} target="_blank">Spotify</a></h5>{{/if}}
-    {{#if this.instagram.0.url}}<h5><a href={{this.instagram.0.url}} target="_blank">Instagram</a></h5>{{/if}}
-    {{#if this.homepage.0.url}}<h5><a href={{this.homepage.0.url}} target="_blank">Homepage</a></h5>{{/if}}
+    {{#if this.youtube.0.url}}
+    <h5>
+        <p class=" link fa fa-youtube"></p>
+    <a class="link" href={{this.youtube.0.url}} target="_blank">Youtube</a>
+    </h5>
+    {{/if}}
+    {{#if this.twitter.0.url}}
+    <h5>
+    <p class=" link fa fa-twitter"></p>
+    <a class="link" href={{this.twitter.0.url}} target="_blank">Twitter</a>
+    </h5>
+    {{/if}}
+    {{#if this.spotify.0.url}}
+    <h5>
+    <p class=" link fa fa-spotify"></p>
+    <a class="link " href={{this.spotify.0.url}} target="_blank">Spotify</a>
+    </h5>
+    {{/if}}
+    {{#if this.instagram.0.url}}
+    <h5>
+    <p class=" link fa fa-instagram"></p>
+    <a class="link" href={{this.instagram.0.url}} target="_blank">Instagram</a>
+    </h5>
+    {{/if}}
+    {{#if this.homepage.0.url}}
+    <h5>
+    <a class="link" href={{this.homepage.0.url}} target="_blank">Website</a>
+    </h5>
+    {{/if}}
 {{/with}}
 {{/each}}

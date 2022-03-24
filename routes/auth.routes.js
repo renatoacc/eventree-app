@@ -38,7 +38,7 @@ router.post("/signup", isLoggedOut, (req, res, next) => {
     if (found) {
       return res
         .status(400)
-        .render("auth/signup", { errorMessage: "Username already taken." });
+        .render("auth/signup", { errorMessage: "The username you choose is already taken." });
     }
 
     bcryptjs
@@ -76,7 +76,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   if (username === "" || password === "") {
     res.render("auth/login", {
-      errorMessage: "Please enter both, username and password to login.",
+      errorMessage: "You need to type an username and a password to login.",
     });
     return;
   }
@@ -85,7 +85,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
     .then((user) => {
       if (!user) {
         res.render("auth/login", {
-          errorMessage: "Username is not registered. Try again.",
+          errorMessage: "The username you entered is incorrect. Please try again.",
         });
         return;
       }
@@ -96,7 +96,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         res.redirect("/profile");
       }
       res.render("auth/login", {
-        errorMessage: "Incorrect password. Try again.",
+        errorMessage: "The password you entered is incorrect. Please try again.",
       });
     })
     .catch((error) => next(error));
