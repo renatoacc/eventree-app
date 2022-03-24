@@ -5,6 +5,7 @@ const Event = require("../models/APIevent.model");
 const Private = require("../models/Privatevent.model");
 
 const isLoggedIn = require("../middleware/isLoggedIn");
+const { EventEmitter } = require("connect-mongo");
 
 async function search(filters) {
   const { data: answer } = await axios.get(
