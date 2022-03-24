@@ -21,18 +21,46 @@ body {
   animation:slide-in-bck-center 6s cubic-bezier(.25,.46,.45,.94) both;
 }
 
+.btn:hover {
+  color: #3b87a7;
+}
+
+/*ERROR*/
+.error{
+  color: white;
+  font-size: 1em;
+}
+
+#divError{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#hError{
+  color: white;
+  font-size: 3em;
+}
+
+#pError{
+  color: white;
+  font-size: 2em;
+}
+
+
 /*SING UP*/
 
 #divSignUp {
   display: flex !important;
   justify-content: center !important; 
-  
 }
 
 #h2SU {
   color: white;
   margin-top: 3%;
   font-size: 50px;
+  display: flex !important;
+  justify-content: center !important;
 }
 
 #formSignUp {
@@ -49,19 +77,28 @@ body {
 .form-control{
   background-color: #0F2027;
   border-color: #0F2027;
+  width: 50vw;;
+  color: white;
+  font-weight: 600;
+  font-size: 1vw;
+  margin: 2%;
 }
 
 .form-select{
   background-color: #0F2027;
   border-color: #0F2027;
-  color: gray;
+  color: white;
+  width: 50vw;
+}
+#suFlex{
+  justify-content: center;
 }
 
 #signupBtn{
   margin-top: 3%;
   background-color: #0F2027;
   border-color: #0F2027;
-  color: gray;
+  color: white;
 }
 
 /*LOGIN*/
@@ -79,12 +116,14 @@ body {
 
 #formLI{
   margin-top: 2%;
+  color: white;
+  font-size: 1vw;
 }
 
 #logInBtn{
   background-color: #0F2027;
   border-color: #0F2027;
-  color: gray;
+  color: white;
 }
 
 /*Profile*/
@@ -94,22 +133,16 @@ body {
   flex-direction: column;
 }
 
-#h2Pr{
-  color: white;
-  margin-top: 3%;
-  font-size: 50px;
-}
-
 #h3Pr{
   color: white;
   margin-top: 2%;
-  font-size: 30px;
+  margin-bottom: 3%;
+  font-size: 3em;
 }
 
-#h5Pr{
+.parProf{
   color: white;
-  margin-top: 2%;
-  font-size: 25px;
+  font-size: 1.5em;
 }
 
 .card {
@@ -135,10 +168,10 @@ body {
 
 /*DETAILS*/
 
-#h3D{
+.h3D{
   color: white;
   margin-top: 1%;
-  font-size: 30px;
+  font-size: 2em;
 }
 
 .h5D{
@@ -177,7 +210,7 @@ body {
   
 }
 
-/*SEARCH RESULTS*/
+/*SEARCH*/
 
 #h2S{
   color: white;
@@ -189,6 +222,7 @@ body {
   background-color: #0F2027;
   border-color: #0F2027;
   color: white;
+  height: 1%;
 }
 
 #box{
@@ -197,8 +231,17 @@ body {
   color: white;
 }
 
+/*SEARCH RESULTS*/  
 
-
-.btn:hover {
-  color: #3b87a7;
+.searchResBt {
+  background-color: #184355;
+  border-color: #0F2027;
+  color: white;
 }
+
+#test{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+

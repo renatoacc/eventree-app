@@ -25,10 +25,13 @@
         {{#with this.dates}}
         <p class="card-text"><small class="h5D">Data: {{start.localDate}}</small></p>
         {{/with}}
-        <a href={{this.url}}  class="btn btn-warning" target="_blank" >Buy Ticket's</a>
+        <div id="test">
+          <a href={{this.url}}  class="btn searchResBt" target="_blank" >Buy Tickets</a>
         <br>
-        <a href="/detailevents/{{this.id}}" class="btn btn-ligth">More Details</a>
-        <a href="/profile/{{this.id}}/add" class="btn btn-dark">Add</a>
+        <a href="/detailevents/{{this.id}}" class="btn searchResBt">More Details</a>
+        <a href="/profile/{{this.id}}/add" class="btn searchResBt">Add</a>
+        </div>
+        
       </div>
 </div>
 </div>

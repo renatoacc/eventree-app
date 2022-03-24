@@ -1,9 +1,9 @@
 <div id="divProfile" class="container"></div>
 <div id="divInfo">
 {{#if currentUser}}
-  <h2 id="h2Pr">Welcome, {{ currentUser.username }}!</h2>
-  <h3 id="h3Pr">Country: {{currentUser.country}}</h3> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
-  <h5 id="h5Pr">Favorite artist: {{currentUser.favoriteArtist}}</h5>
+  <p id="h3Pr">Welcome, {{ currentUser.username }}!</p>
+  <p class="parProf">Country: {{currentUser.country}}</p> {{!-- mostrar ao utilizador o nome do pais não o countryCode --}}
+  <p class="parProf">Favorite artist: {{currentUser.favoriteArtist}}</p>
   <img style="height: 80px; border-radius: 50%; border: 2px solid white;" src="{{currentUser.avatar}}">
 </div>
 
