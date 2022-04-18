@@ -84,5 +84,5 @@ EVENT - eventId: String, name: String, img: String, date: String, userId: String
 
 
 ADDITIONAL LINKS:
-Link to the application:
+Link to the application: https://eventree-app.herokuapp.com/
 Link to the presentation:
